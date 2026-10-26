@@ -9,6 +9,8 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { randomBytes, createHash } from 'node:crypto';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { sendEmailChangeVerification } from './email.js';
 import multer from 'multer';
 import pdf from 'pdf-parse';
@@ -823,6 +825,28 @@ const queryVector = await embed(retrievalQuery);
 
   res.end();
 }));
+
+
+// -------------------------
+// Serve React Frontend in Production
+// -------------------------
+
+if (process.env.NODE_ENV === 'production') {
+  const currentDir = path.dirname(fileURLToPath(import.meta.url));
+  const clientDist = path.resolve(currentDir, '../../client/dist');
+
+  app.use(express.static(clientDist));
+
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api/')) {
+      return res.status(404).json({
+        error: 'API endpoint not found'
+      });
+    }
+
+    res.sendFile(path.join(clientDist, 'index.html'));
+  });
+}
 
 // -------------------------
 // Global Error Handler

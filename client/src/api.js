@@ -1,5 +1,7 @@
 import axios from 'axios';
-export const BASE=import.meta.env.VITE_API_URL||'http://localhost:5000/api';
+export const BASE =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.PROD ? '/api' : 'http://localhost:5000/api');
 export const api=axios.create({baseURL:BASE});
 api.interceptors.request.use(config=>{const token=localStorage.getItem('contextai_token');if(token)config.headers.Authorization=`Bearer ${token}`;return config;});
 export function errorMessage(e){return e.response?.data?.error||e.message||'Something went wrong';}
