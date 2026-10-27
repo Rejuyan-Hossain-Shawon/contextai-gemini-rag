@@ -1,3 +1,7 @@
+## Live Demo
+
+🌐 [View ContextAI Live](https://contextai-shawon-27d1a27e3b0b.herokuapp.com/)
+
 # ContextAI — AI-Powered Chatbot with Retrieval-Augmented Generation (RAG)
 
 **ContextAI** is a full-stack AI chatbot application built using the MERN stack, Google Gemini, and Retrieval-Augmented Generation (RAG). It allows users to interact with an AI assistant, upload PDF and TXT documents, ask questions about uploaded content, and manage their conversations through a web interface.
